@@ -642,6 +642,11 @@ button {
         grid-row: span 2;
     }
 
+    .work-card.wide {
+        grid-column: span 2;
+    }
+    /* landscape card */
+
     /* Filter animation states (toggled by script.js) */
     .work-card.hide {
         display: none;
@@ -778,6 +783,117 @@ button {
         .work-overlay p, .work-link {
             display: none;
         }
+}
+
+/* ---------- 9b. VIDEO CARDS, CHANNEL BUTTON & POP-UP PLAYER ---------- */
+.work-card[data-video] {
+    cursor: pointer;
+}
+
+.play-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    display: grid;
+    place-items: center;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: rgba(2, 8, 24, 0.55);
+    border: 2px solid rgba(255, 255, 255, 0.75);
+    color: #fff;
+    font-size: 1.3rem;
+    z-index: 3;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.3s var(--ease), background 0.3s;
+}
+
+.work-card:hover .play-badge, .work-card:focus-visible .play-badge {
+    transform: scale(1.12);
+    background: var(--accent-strong);
+}
+
+.portfolio-cta {
+    text-align: center;
+    margin-top: 48px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(2, 6, 18, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), visibility 0.3s;
+}
+
+    .modal.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.modal-inner {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: min(960px, 100%, calc((100vh - 120px) * 16 / 9));
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 80px var(--glow);
+    transform: scale(0.96);
+    transition: transform 0.3s var(--ease);
+}
+
+.modal.open .modal-inner {
+    transform: none;
+}
+
+.modal-inner.vertical {
+    aspect-ratio: 9 / 16;
+    width: min(380px, 100%, calc((100vh - 100px) * 9 / 16));
+}
+
+.modal-body, .modal-body iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.modal-note {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 30px;
+    text-align: center;
+    color: #c3d4ef;
+}
+
+@media (max-width: 640px) {
+    .work-card.wide {
+        grid-column: span 1;
+    }
+    /* single column on small screens */
 }
 
 /* ---------- 10. TIMELINE ---------- */

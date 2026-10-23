@@ -144,6 +144,80 @@
         });
     });
 
+    /* ---------- 6b. YOUTUBE VIDEO CARDS + POP-UP PLAYER ----------
+       Any card with data-video="..." opens that video when clicked.
+       data-video accepts a full YouTube link OR the 11-character video ID. */
+    const modal = document.getElementById("videoModal");
+    const modalBody = document.getElementById("videoModalBody");
+    const modalInner = modal.querySelector(".modal-inner");
+    const modalClose = document.getElementById("videoClose");
+    let lastFocused = null;
+
+    // Pull the 11-character ID out of any YouTube link (watch, youtu.be, embed, shorts)
+    function parseYouTubeId(input) {
+        if (!input) return "";
+        const match = input.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+        return match ? match[1] : input.trim();
+    }
+    const isPlaceholder = (id) => !id || /VIDEO_ID|YOUR_/i.test(id);
+
+    const videoCards = document.querySelectorAll(".work-card[data-video]");
+
+    // Auto-fill thumbnails from YouTube (skipped if the <img> already has your own src)
+    videoCards.forEach((card) => {
+        const id = parseYouTubeId(card.dataset.video);
+        const img = card.querySelector("img");
+        if (img && !img.getAttribute("src") && !isPlaceholder(id)) {
+            img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        }
+    });
+
+    function openVideo(card) {
+        const id = parseYouTubeId(card.dataset.video);
+        lastFocused = document.activeElement;
+        modalInner.classList.toggle("vertical", card.dataset.vertical === "true");
+        modalBody.innerHTML = "";
+
+        if (isPlaceholder(id)) {
+            const note = document.createElement("p");
+            note.className = "modal-note";
+            note.textContent = "Add your YouTube link or video ID to this card's data-video attribute in index.html.";
+            modalBody.appendChild(note);
+        } else {
+            const frame = document.createElement("iframe");
+            frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+            frame.title = card.getAttribute("aria-label") || "YouTube video";
+            frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+            frame.allowFullscreen = true;
+            frame.referrerPolicy = "strict-origin-when-cross-origin";
+            modalBody.appendChild(frame);
+        }
+
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        modalClose.focus();
+    }
+
+    function closeVideo() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        modalBody.innerHTML = "";            // removing the iframe stops the video
+        document.body.style.overflow = "";
+        if (lastFocused) lastFocused.focus();
+    }
+
+    videoCards.forEach((card) => {
+        card.addEventListener("click", () => openVideo(card));
+        card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openVideo(card); }
+        });
+    });
+
+    modalClose.addEventListener("click", closeVideo);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeVideo(); });   // click dark backdrop
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) closeVideo(); });
+
     /* ---------- 7. CONTACT FORM ---------- */
     const form = document.getElementById("contactForm");
     const statusEl = document.getElementById("formStatus");
