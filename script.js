@@ -1,14 +1,20 @@
 /* =========================================================
    JAM GUEVARRA PORTFOLIO - script.js
    Sections:
-   1. Theme toggle (light / dark, remembered)
-   2. Mobile menu + navbar scroll state
-   3. Typing effect (edit ROLES below)
-   4. Scroll-reveal animations (Intersection Observer)
-   5. Active nav link highlighting
-   6. Portfolio filter
-   7. Contact form
-   8. Footer year
+   1.  Theme toggle (light / dark, remembered)
+   2.  Mobile menu + navbar scroll state
+   3.  Typing effect (edit ROLES below)
+   4.  Scroll-reveal animations (Intersection Observer)
+   5.  Active nav link highlighting
+   6.  Portfolio filter (a card can sit in several tabs)
+   6b. YouTube / Facebook video pop-up player
+   6c. Cards that open a page (data-href)
+   6d. Reels scroller (arrows + mouse drag)
+   6e. Certificates: "More Certificates" expand
+   6f. Image names: tries .jpg / .png / .jpeg / .webp automatically
+   6g. Image viewer (certificates + design cards)
+   7.  Contact form
+   8.  Footer year
    ========================================================= */
 
 (() => {
@@ -115,11 +121,17 @@
 
     /* ---------- 6. PORTFOLIO FILTER ---------- */
     const filterBtns = document.querySelectorAll(".filter-btn");
-    const cards = document.querySelectorAll(".work-card");
+    const cards = document.querySelectorAll("#portfolioGrid .work-card");   // only the portfolio grid (not the reels)
+    const emptyEl = document.getElementById("filterEmpty");
+
+    // A card can belong to several tabs: data-category="films editing"
+    const cardMatches = (card, filter) =>
+        filter === "all" || (card.dataset.category || "").split(/\s+/).includes(filter);
 
     filterBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
             const filter = btn.dataset.filter;
+            let shown = 0;
 
             filterBtns.forEach((b) => {
                 const active = b === btn;
@@ -128,7 +140,8 @@
             });
 
             cards.forEach((card) => {
-                const match = filter === "all" || card.dataset.category === filter;
+                const match = cardMatches(card, filter);
+                if (match) shown++;
 
                 if (match) {
                     card.classList.remove("hide");
@@ -141,12 +154,22 @@
                     }, 350);
                 }
             });
+
+            // Friendly message when a tab has no cards yet (for example "Developer")
+            if (emptyEl) {
+                if (shown === 0) {
+                    emptyEl.textContent = `Nothing in “${btn.textContent.trim()}” yet - coming soon.`;
+                    emptyEl.hidden = false;
+                } else {
+                    emptyEl.hidden = true;
+                }
+            }
         });
     });
 
-    /* ---------- 6b. YOUTUBE VIDEO CARDS + POP-UP PLAYER ----------
+    /* ---------- 6b. VIDEO CARDS + POP-UP PLAYER ----------
        Any card with data-video="..." opens that video when clicked.
-       data-video accepts a full YouTube link OR the 11-character video ID. */
+       data-video accepts a YouTube link, a YouTube video ID, or a Facebook video link. */
     const modal = document.getElementById("videoModal");
     if (!modal) {
         // Safety net: if index.html is an older version without the pop-up, don't crash the rest of the page
@@ -204,7 +227,7 @@
                 fallback.href = fb ? raw : `https://www.youtube.com/watch?v=${id}`;
                 fallback.textContent = fb ? "Open on Facebook ↗" : "Open on YouTube ↗";
                 fallback.hidden = false;
-                frame.title = card.getAttribute("aria-label") || "YouTube video";
+                frame.title = card.getAttribute("aria-label") || "Video";
                 frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen";
                 frame.allowFullscreen = true;
                 frame.referrerPolicy = "strict-origin-when-cross-origin";
@@ -237,12 +260,212 @@
         document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) closeVideo(); });
     } // end if (modal)
 
+    /* ---------- 6c. CARDS THAT OPEN A PAGE (data-href) ----------
+       The whole card is clickable (works on phones too, where hover links are hidden). */
+    document.querySelectorAll(".work-card[data-href]").forEach((card) => {
+        const go = () => window.open(card.dataset.href, "_blank", "noopener");
+        card.addEventListener("click", (e) => {
+            if (e.target.closest("a")) return;   // the inner link already opens the page
+            go();
+        });
+        card.addEventListener("keydown", (e) => {
+            if ((e.key === "Enter" || e.key === " ") && e.target === card) { e.preventDefault(); go(); }
+        });
+    });
+
+    /* ---------- 6d. REELS SCROLLER ---------- */
+    const reelsTrack = document.getElementById("reelsTrack");
+    if (reelsTrack) {
+        const reelsPrev = document.getElementById("reelsPrev");
+        const reelsNext = document.getElementById("reelsNext");
+        const step = () => Math.max(reelsTrack.clientWidth * 0.8, 200);
+
+        const updateReelArrows = () => {
+            if (!reelsPrev || !reelsNext) return;
+            const maxLeft = reelsTrack.scrollWidth - reelsTrack.clientWidth - 2;
+            reelsPrev.disabled = reelsTrack.scrollLeft <= 2;
+            reelsNext.disabled = reelsTrack.scrollLeft >= maxLeft;
+        };
+
+        if (reelsPrev) reelsPrev.addEventListener("click", () => reelsTrack.scrollBy({ left: -step(), behavior: "smooth" }));
+        if (reelsNext) reelsNext.addEventListener("click", () => reelsTrack.scrollBy({ left: step(), behavior: "smooth" }));
+        reelsTrack.addEventListener("scroll", updateReelArrows, { passive: true });
+        window.addEventListener("resize", updateReelArrows);
+        updateReelArrows();
+
+        // Click-and-drag with a mouse (touch screens already swipe natively)
+        let dragging = false, moved = false, startX = 0, startLeft = 0;
+
+        reelsTrack.addEventListener("pointerdown", (e) => {
+            if (e.pointerType !== "mouse" || e.button !== 0) return;
+            dragging = true;
+            moved = false;
+            startX = e.clientX;
+            startLeft = reelsTrack.scrollLeft;
+        });
+
+        window.addEventListener("pointermove", (e) => {
+            if (!dragging) return;
+            const dx = e.clientX - startX;
+            if (!moved && Math.abs(dx) > 6) {
+                moved = true;
+                reelsTrack.classList.add("dragging");
+            }
+            if (moved) reelsTrack.scrollLeft = startLeft - dx;
+        });
+
+        const endDrag = () => {
+            if (!dragging) return;
+            dragging = false;
+            reelsTrack.classList.remove("dragging");
+        };
+        window.addEventListener("pointerup", endDrag);
+        window.addEventListener("pointercancel", endDrag);
+
+        // A drag should not count as a click on a reel
+        reelsTrack.addEventListener("click", (e) => {
+            if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+        }, true);
+    }
+
+    /* ---------- 6e. CERTIFICATES: "MORE CERTIFICATES" ---------- */
+    const certMoreBtn = document.getElementById("certMoreBtn");
+    const certMore = document.getElementById("certMore");
+    const certMoreText = document.getElementById("certMoreText");
+
+    const availableExtras = () => (certMore ? certMore.querySelectorAll(".cert-extra:not(.missing)").length : 0);
+
+    function updateCertMore() {
+        if (!certMoreBtn || !certMore || !certMoreText) return;
+        const n = availableExtras();
+        if (!certMore.hidden) certMoreText.textContent = "Show Less";
+        else certMoreText.textContent = n > 0 ? `+${n} More Certificates` : "More Coming Soon";
+    }
+
+    if (certMoreBtn && certMore) {
+        certMoreBtn.addEventListener("click", () => {
+            if (availableExtras() === 0) return;           // nothing to show yet
+            const willOpen = certMore.hidden;
+            certMore.hidden = !willOpen;
+            certMoreBtn.setAttribute("aria-expanded", String(willOpen));
+            updateCertMore();
+            if (willOpen) certMore.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+        updateCertMore();
+    }
+
+    /* ---------- 6f. IMAGE NAMES: .jpg / .png / .jpeg / .webp ----------
+       Images marked data-multi-ext (certificates, reels, new cards) try the other
+       extensions automatically. So images/cert1.png works even though the HTML says cert1.jpg.
+       Optional certificates (data-optional) with no image at all are removed from the page. */
+    const EXTS = ["jpg", "png", "jpeg", "webp", "JPG", "PNG", "JPEG"];
+
+    function tryExtensions(img, onFail) {
+        const src = img.getAttribute("src") || "";
+        if (!src) return;
+        const base = src.replace(/\.[A-Za-z0-9]+$/, "");
+        const tried = new Set([src]);
+
+        const next = () => {
+            const candidate = EXTS.map((e) => `${base}.${e}`).find((s) => !tried.has(s));
+            if (!candidate) {
+                img.style.display = "none";    // nothing found: the gradient placeholder shows instead
+                if (onFail) onFail();
+                return;
+            }
+            tried.add(candidate);
+            img.src = candidate;
+        };
+
+        img.addEventListener("error", next);
+        if (img.complete && img.naturalWidth === 0) next();   // it already failed before this script ran
+    }
+
+    document.querySelectorAll("img[data-multi-ext]").forEach((img) => {
+        const holder = img.closest("[data-optional]");
+        tryExtensions(img, () => {
+            if (holder) holder.classList.add("missing");
+            updateCertMore();
+        });
+    });
+
+    /* ---------- 6g. IMAGE VIEWER (certificates + design cards) ---------- */
+    const lightbox = document.getElementById("lightbox");
+    if (lightbox) {
+        const lbImg = document.getElementById("lightboxImg");
+        const lbCap = document.getElementById("lightboxCaption");
+        const lbPrev = document.getElementById("lightboxPrev");
+        const lbNext = document.getElementById("lightboxNext");
+        const lbClose = document.getElementById("lightboxClose");
+        const lbItems = Array.from(document.querySelectorAll("[data-lightbox]"));
+        let group = [], index = 0, lbLastFocus = null;
+
+        // Only cards whose image really loaded can be opened
+        const usable = (el) => {
+            const img = el.querySelector("img");
+            return !!img && img.style.display !== "none" && img.naturalWidth > 0;
+        };
+        const visibleInGroup = (name) => lbItems.filter((el) =>
+            el.dataset.lightbox === name && el.offsetParent !== null &&
+            !el.classList.contains("missing") && usable(el));
+
+        function showAt(i) {
+            index = (i + group.length) % group.length;
+            const el = group[index];
+            const img = el.querySelector("img");
+            lbImg.src = img.currentSrc || img.src;
+            lbImg.alt = img.alt || "";
+            lbCap.textContent = el.dataset.caption || img.alt || "";
+            const several = group.length > 1;
+            lbPrev.hidden = !several;
+            lbNext.hidden = !several;
+        }
+
+        function openLightbox(el) {
+            if (!usable(el)) return;
+            group = visibleInGroup(el.dataset.lightbox);
+            index = Math.max(0, group.indexOf(el));
+            lbLastFocus = document.activeElement;
+            showAt(index);
+            lightbox.classList.add("open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            lbClose.focus();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove("open");
+            lightbox.setAttribute("aria-hidden", "true");
+            lbImg.removeAttribute("src");
+            document.body.style.overflow = "";
+            if (lbLastFocus) lbLastFocus.focus();
+        }
+
+        lbItems.forEach((el) => {
+            el.addEventListener("click", () => openLightbox(el));
+            el.addEventListener("keydown", (e) => {
+                if ((e.key === "Enter" || e.key === " ") && e.target === el) { e.preventDefault(); openLightbox(el); }
+            });
+        });
+
+        lbPrev.addEventListener("click", () => showAt(index - 1));
+        lbNext.addEventListener("click", () => showAt(index + 1));
+        lbClose.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("open")) return;
+            if (e.key === "Escape") closeLightbox();
+            else if (e.key === "ArrowLeft") showAt(index - 1);
+            else if (e.key === "ArrowRight") showAt(index + 1);
+        });
+    }
+
     /* ---------- 7. CONTACT FORM ---------- */
     const form = document.getElementById("contactForm");
     const statusEl = document.getElementById("formStatus");
 
-    // >>> CHANGE THIS to the email that should receive messages <<<
-    const CONTACT_EMAIL = "your.email@example.com";
+    // Messages from the contact form go to this email
+    const CONTACT_EMAIL = "jamvincentguevarra@gmail.com";
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -269,7 +492,7 @@
         /* DEFAULT BEHAVIOR: opens the visitor's email app with the message filled in.
            To receive real submissions without an email app, replace the lines below with
            a fetch() call to Formspree / Netlify Forms / EmailJS, e.g.:
-    
+
            fetch("https://formspree.io/f/YOUR_ID", {
              method: "POST",
              headers: { "Content-Type": "application/json" },

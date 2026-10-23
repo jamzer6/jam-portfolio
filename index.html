@@ -6,19 +6,17 @@
     <title>Jam Guevarra | Visionary · Artist · Developer</title>
     <meta name="description" content="Portfolio of Jam Guevarra - BSCS student, freelancer, developer, director, visionary, artist and UI/UX designer." />
 
-    <!-- TAB ICON (FAVICON) - this replaces the default globe icon.
-         1. Save your logo as images/logo.png (square, 512x512 px works best, transparent background is fine)
-         2. That's it! If you use a different file name, change both lines below.
-         After uploading, hard refresh (Ctrl+Shift+R) - browsers cache tab icons for a long time. -->
-    <link rel="icon" type="image/png" href="images/logo.png" />
-    <link rel="apple-touch-icon" href="images/logo.png" />
+    <!-- TAB ICON (FAVICON)
+         This is the same blue "JG" badge used in the navbar, drawn as a tiny built-in SVG,
+         so you do NOT need an image file for it. -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237cc4ff'/%3E%3Cstop offset='1' stop-color='%234aa8ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='Impact,Arial Black,Arial,sans-serif' font-size='30' font-weight='900' text-anchor='middle' fill='%2304101f'%3EJG%3C/text%3E%3C/svg%3E" />
 
     <!-- Apply saved theme BEFORE paint to avoid a flash of the wrong theme -->
     <script>
-            try {
-              const saved = localStorage.getItem("theme");
-              if (saved) document.documentElement.setAttribute("data-theme", saved);
-            } catch (e) {}
+                    try {
+                      const saved = localStorage.getItem("theme");
+                      if (saved) document.documentElement.setAttribute("data-theme", saved);
+                    } catch (e) {}
     </script>
 
     <!-- Google Fonts: Poppins (body/UI) + Playfair Display & Bebas Neue (display) -->
@@ -48,6 +46,7 @@
             <a href="#home" class="nav-link">Home</a>
             <a href="#about" class="nav-link">About</a>
             <a href="#portfolio" class="nav-link">Works</a>
+            <a href="#reels" class="nav-link">Reels</a>
             <a href="#background" class="nav-link">Background</a>
             <a href="#contact" class="nav-link">Contact</a>
         </nav>
@@ -93,19 +92,15 @@
                     <div class="hero-cta">
                         <a href="#portfolio" class="btn btn-primary">View My Work</a>
                         <a href="#contact" class="btn btn-ghost">Let's Talk</a>
-                        <!-- YOUTUBE CHANNEL BUTTON: replace the href with your real channel link -->
-                        <a href="https://youtube.com/@your-channel" target="_blank" rel="noopener" class="btn btn-ghost">
+                        <!-- YOUTUBE CHANNEL BUTTON (Direk Jam) -->
+                        <a href="https://www.youtube.com/channel/UCGBt_NqGpjgnqz9bnCAtAnw" target="_blank" rel="noopener" class="btn btn-ghost">
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" /></svg>
                             YouTube
                         </a>
                     </div>
                 </div>
 
-                <!-- HERO PORTRAIT
-                     Replace images/portrait.jpg with your own photo.
-                     Tip: a dark, moody photo with a light-blue backlight (or a silhouette
-                     like the reference image) works best. If the file is missing, a
-                     silhouette placeholder is shown automatically. -->
+                <!-- HERO PORTRAIT: images/portrait.png -->
                 <div class="hero-visual reveal">
                     <div class="portrait-frame">
                         <div class="portrait-placeholder" aria-hidden="true">
@@ -171,11 +166,15 @@
         <!-- =========================================================
              PORTFOLIO
              HOW TO EDIT A CARD:
-             1. Change data-category to one of: developer | editing | designs | other
-             2. Put your image in /images and change the <img src="...">
+             1. data-category decides which tab(s) the card shows under:
+                developer | editing | designs | other | films
+                A card can sit in SEVERAL tabs: data-category="films editing"
+             2. Card behaviour (pick one):
+                - data-video="YouTube/Facebook link"  -> opens a video pop-up
+                - data-href="https://..."             -> opens that page in a new tab
+                - data-lightbox="works"               -> opens the card's image bigger
+             3. Images live in /images. Change the <img src="...">
                 (the gradient behind it is only a placeholder)
-             3. Change the title / description text
-             4. Change the href on the "View" link to your real project link
         ========================================================== -->
         <section class="section" id="portfolio">
             <div class="container">
@@ -184,109 +183,104 @@
                     <h2 class="section-title">Portfolio</h2>
                 </header>
 
-                <!-- Filter tabs. "All" is an extra convenience tab - delete that button if you want exactly 4. -->
+                <!-- Filter tabs ("All" and "Films" are extras - delete a button if you don't want it) -->
                 <div class="filters reveal" role="tablist" aria-label="Filter portfolio">
                     <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
                     <button class="filter-btn" data-filter="developer" role="tab" aria-selected="false">Developer</button>
                     <button class="filter-btn" data-filter="editing" role="tab" aria-selected="false">Editing</button>
                     <button class="filter-btn" data-filter="designs" role="tab" aria-selected="false">Designs</button>
                     <button class="filter-btn" data-filter="other" role="tab" aria-selected="false">Other Works</button>
-                    <!-- "Films" tab for your trailers. Delete this button if you'd rather put trailers under another tab
-                         (then change data-category="films" on those cards). -->
                     <button class="filter-btn" data-filter="films" role="tab" aria-selected="false">Films</button>
                 </div>
 
                 <div class="portfolio-grid" id="portfolioGrid">
 
-                    <!-- DEVELOPER 1 -->
-                    <article class="work-card tall" data-category="developer">
+                    <!-- THE ARTJARZ STORY (studio Facebook page) -->
+                    <article class="work-card tall" data-category="other" data-href="https://www.facebook.com/theartjarzstory" tabindex="0" role="link" aria-label="Visit The Artjarz Story on Facebook">
                         <div class="work-media grad-1">
-                            <img src="images/dev-plant-monitor.jpg" alt="CNN Plant Leaf Monitoring System" loading="lazy" onerror="this.style.display='none'" />
+                            <!-- Image: images/artjarz.jpg (a .png also works) -->
+                            <img src="images/artjarz.jpg" alt="The Artjarz Story" loading="lazy" data-multi-ext />
                         </div>
                         <div class="work-overlay">
-                            <span class="work-tag">Developer</span>
-                            <h3>CNN Plant Leaf Monitoring System</h3>
-                            <p>A convolutional neural network project that monitors and classifies plant leaf health.</p>
-                            <a href="#" class="work-link">View Project →</a> <!-- TODO: real link -->
+                            <span class="work-tag">Studio Page</span>
+                            <h3>The Artjarz Story</h3>
+                            <p>My studio's official Facebook page.</p>
+                            <a href="https://www.facebook.com/theartjarzstory" target="_blank" rel="noopener" class="work-link">Visit Page →</a>
                         </div>
                     </article>
 
-                    <!-- DEVELOPER 2 -->
-                    <article class="work-card" data-category="developer">
+                    <!-- DP BLAST EDIT (Designs) -->
+                    <article class="work-card" data-category="designs" data-lightbox="works" data-caption="DP Blast Edit" tabindex="0" role="button" aria-label="View DP Blast Edit">
                         <div class="work-media grad-2">
-                            <img src="images/scape1.jpg" alt="Interactive Game-Aesthetic Webpage" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/scape1.jpg" alt="DP Blast Edit" loading="lazy" onerror="this.style.display='none'" />
                         </div>
                         <div class="work-overlay">
-                            <span class="work-tag">Developer</span>
-                            <h3>Interactive Game-Aesthetic Webpage</h3>
-                            <p>An immersive, game-inspired web experience full of motion and interaction.</p>
-                            <a href="#" class="work-link">View Project →</a>
+                            <span class="work-tag">Designs</span>
+                            <h3>DP Blast Edit</h3>
+                            <p>A display picture (DP) blast graphic edit.</p>
+                            <span class="work-link">View Image →</span>
                         </div>
                     </article>
 
-                    <!-- EDITING 1 -->
-                    <article class="work-card" data-category="editing">
+                    <!-- PUBLICATION MATERIALS 01 (Designs) -->
+                    <article class="work-card" data-category="designs" data-lightbox="works" data-caption="Publication Materials 01" tabindex="0" role="button" aria-label="View Publication Materials 01">
                         <div class="work-media grad-3">
-                            <img src="images/scape2.jpg" alt="Camou Skincare Video Reels" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/scape2.jpg" alt="Publication Materials 01" loading="lazy" onerror="this.style.display='none'" />
                         </div>
                         <div class="work-overlay">
-                            <span class="work-tag">Editing</span>
-                            <h3>Camou Skincare Video Reels</h3>
-                            <p>Short-form product reels edited for a skincare brand. Swap in a video embed if you like.</p>
-                            <a href="#" class="work-link">Watch Reel →</a>
+                            <span class="work-tag">Designs</span>
+                            <h3>Publication Materials 01</h3>
+                            <p>Graphic and layout work for publication materials.</p>
+                            <span class="work-link">View Image →</span>
                         </div>
                     </article>
 
-                    <!-- EDITING 2 -->
-                    <!-- YOUTUBE VIDEO CARD (example)
-                         HOW IT WORKS: any card with data-video="..." opens that YouTube video in a pop-up player.
-                         - Paste the full YouTube link OR just the 11-character ID (the part after v= in the link).
-                         - The thumbnail is pulled from YouTube automatically. To use your own image instead,
-                           add src="images/your-image.jpg" to the <img> tag.
-                         - Add data-vertical="true" if the video is a YouTube Short (9:16 vertical). -->
-                    <article class="work-card tall" data-category="editing" data-video="https://www.facebook.com/share/v/1FU17HdFay/" tabindex="0" role="button" aria-label="Play Gameplay Highlights">
+                    <!-- AWS x CSSO (Editing, Facebook video) -->
+                    <!-- data-vertical="true" can be added to the <article> if this video is a vertical Reel -->
+                    <article class="work-card tall" data-category="editing" data-video="https://www.facebook.com/share/v/1FU17HdFay/" tabindex="0" role="button" aria-label="Play AWS x CSSO">
                         <div class="work-media grad-4">
-                            <!-- Facebook videos have no automatic thumbnail: save your own image as images/edit-yt-highlights.jpg
-                                 Add data-vertical="true" to the <article> line above if this is a vertical Reel. -->
-                            <img src="images/aws1.png" alt="Gameplay Highlights" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/aws1.png" alt="AWS x CSSO" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Editing</span>
-                            <h3>YouTube Gameplay Highlights</h3>
-                            <p>Fast-paced gameplay montages with rhythm-driven cuts and color work.</p>
+                            <h3>AWS x CSSO</h3>
+                            <p>A vlog-style video edit for AWS x CSSO.</p>
                             <span class="work-link">▶ Play video</span>
                         </div>
                     </article>
 
-                    <!-- DESIGNS 1 -->
-                    <article class="work-card" data-category="designs">
+                    <!-- PUBLICATION MATERIALS 02 (Designs) -->
+                    <article class="work-card" data-category="designs" data-lightbox="works" data-caption="Publication Materials 02" tabindex="0" role="button" aria-label="View Publication Materials 02">
                         <div class="work-media grad-5">
-                            <img src="images/scape3.jpg" alt="Panimalay Indie Film Animations" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/scape3.jpg" alt="Publication Materials 02" loading="lazy" onerror="this.style.display='none'" />
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Designs</span>
-                            <h3>Panimalay Indie Film Animations</h3>
-                            <p>Animated visuals and motion graphics created for an indie film.</p>
-                            <a href="#" class="work-link">View Project →</a>
+                            <h3>Publication Materials 02</h3>
+                            <p>Graphic and layout work for publication materials.</p>
+                            <span class="work-link">View Image →</span>
                         </div>
                     </article>
 
-                    <!-- DESIGNS 2 -->
-                    <article class="work-card" data-category="designs">
+                    <!-- JAMMED FILMS (Facebook page) -->
+                    <!-- TODO: replace the Facebook link below (twice) with the exact Jammed Films page link.
+                         It currently opens a Facebook search for "Jammed Films". -->
+                    <article class="work-card" data-category="other" data-href="https://www.facebook.com/search/pages?q=Jammed%20Films" tabindex="0" role="link" aria-label="Visit Jammed Films on Facebook">
                         <div class="work-media grad-6">
-                            <img src="images/design-emman-brand.jpg" alt="Emman's Ref and Aircon Brand Identity" loading="lazy" onerror="this.style.display='none'" />
+                            <!-- Image: images/jammed-films.jpg (a .png also works) -->
+                            <img src="images/jammed-films.jpg" alt="Jammed Films" loading="lazy" data-multi-ext />
                         </div>
                         <div class="work-overlay">
-                            <span class="work-tag">Designs</span>
-                            <h3>Emman's Ref &amp; Aircon Brand Identity</h3>
-                            <p>Logo, color system and collateral for a local appliance business.</p>
-                            <a href="#" class="work-link">View Project →</a>
+                            <span class="work-tag">Film Page</span>
+                            <h3>Jammed Films</h3>
+                            <p>My film page on Facebook.</p>
+                            <a href="https://www.facebook.com/search/pages?q=Jammed%20Films" target="_blank" rel="noopener" class="work-link">Visit Page →</a>
                         </div>
                     </article>
 
                     <!-- OTHER WORKS -->
-                    <article class="work-card tall" data-category="other">
+                    <article class="work-card tall" data-category="other" data-lightbox="works" data-caption="Directing & Photography Portfolio" tabindex="0" role="button" aria-label="View Directing and Photography Portfolio">
                         <div class="work-media grad-7">
                             <img src="images/other-directing-photo.jpg" alt="Directing and Photography Portfolio" loading="lazy" onerror="this.style.display='none'" />
                         </div>
@@ -294,64 +288,168 @@
                             <span class="work-tag">Other Works</span>
                             <h3>Directing &amp; Photography Portfolio</h3>
                             <p>A collection of directed scenes and photographic work.</p>
-                            <a href="#" class="work-link">View Gallery →</a>
+                            <span class="work-link">View Image →</span>
                         </div>
                     </article>
 
-                    <!-- ================= FILM TRAILERS (new) ================= -->
-                    <!-- LANDSCAPE CARD 1 (class "wide" = twice as wide)
-                         Replace VIDEO_ID_1 with your trailer's YouTube link or ID, then edit title + description. -->
-                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/O3CVEZNB82c" tabindex="0" role="button" aria-label="Play Film Trailer 01">
+                    <!-- ================= FILMS (show under both "Films" and "Editing") ================= -->
+                    <!-- PIRITA (landscape card, thumbnail comes from YouTube automatically) -->
+                    <article class="work-card wide" data-category="films editing" data-video="https://youtu.be/O3CVEZNB82c" tabindex="0" role="button" aria-label="Play PIRITA">
                         <div class="work-media grad-5">
-                            <img alt="Film Trailer 01" loading="lazy" onerror="this.style.display='none'" />
+                            <img alt="PIRITA" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Film Trailer</span>
-                            <h3>Film Title One</h3>
-                            <p>Official trailer. Write a short line about the film here.</p>
+                            <h3>PIRITA</h3>
+                            <!-- Paste the description from your YouTube video here -->
+                            <p>Official film trailer.</p>
                             <span class="work-link">▶ Watch Trailer</span>
                         </div>
                     </article>
 
-                    <!-- LANDSCAPE CARD 2 -->
-                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/2cNXvc8w7gA" tabindex="0" role="button" aria-label="Play Film Trailer 02">
+                    <!-- PANIMALAY (landscape card) -->
+                    <article class="work-card wide" data-category="films editing" data-video="https://youtu.be/2cNXvc8w7gA" tabindex="0" role="button" aria-label="Play Panimalay">
                         <div class="work-media grad-2">
-                            <img alt="Film Trailer 02" loading="lazy" onerror="this.style.display='none'" />
+                            <img alt="Panimalay" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Film Trailer</span>
-                            <h3>Film Title Two</h3>
-                            <p>Official trailer. Write a short line about the film here.</p>
+                            <h3>Panimalay</h3>
+                            <p>A student short film under the production of Santan Creatives.</p>
                             <span class="work-link">▶ Watch Trailer</span>
                         </div>
                     </article>
 
-                    <!-- TALL CARD (class "tall" = twice as high). Great for a movie poster:
-                         put your poster at images/film-poster.jpg. The trailer still plays when clicked. -->
-                    <article class="work-card tall" data-category="films" data-video="https://youtu.be/ZSlfgxLcBt4" tabindex="0" role="button" aria-label="Play Film Trailer 03">
+                    <!-- INFINITE CAPACITIES (tall card with poster: images/ICP.png) -->
+                    <article class="work-card tall" data-category="films editing" data-video="https://youtu.be/ZSlfgxLcBt4" tabindex="0" role="button" aria-label="Play Infinite Capacities">
                         <div class="work-media grad-7">
-                            <img src="images/ICP.png" alt="Film Trailer 03 poster" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/ICP.png" alt="Infinite Capacities poster" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Film Trailer</span>
-                            <h3>Film Title Three</h3>
-                            <p>Official trailer. Write a short line about the film here.</p>
+                            <h3>Infinite Capacities</h3>
+                            <!-- Paste the description from your YouTube video here -->
+                            <p>Official film trailer.</p>
                             <span class="work-link">▶ Watch Trailer</span>
                         </div>
                     </article>
 
                 </div>
 
-                <!-- YOUTUBE CHANNEL BUTTON under the grid: replace the href with your channel link -->
+                <!-- Shown automatically when a tab has no cards yet (e.g. Developer) -->
+                <p class="filter-empty" id="filterEmpty" hidden></p>
+
+                <!-- YOUTUBE CHANNEL BUTTON under the grid -->
                 <div class="portfolio-cta reveal">
-                    <a href="https://youtube.com/@your-channel" target="_blank" rel="noopener" class="btn btn-primary">
+                    <a href="https://www.youtube.com/channel/UCGBt_NqGpjgnqz9bnCAtAnw" target="_blank" rel="noopener" class="btn btn-primary">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" /></svg>
                         Visit My YouTube Channel
                     </a>
                 </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             REELS: tall vertical reels you scroll sideways
+             HOW TO EDIT A REEL:
+             1. Replace VIDEO_ID_REEL_x with the reel's Facebook / YouTube Shorts link.
+             2. Put the cover image at images/reelX.jpg (a .png also works).
+             3. Change the title.
+             To add more reels, copy one <article> block and paste it inside the track.
+        ========================================================== -->
+        <section class="section" id="reels">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">Edited Reels</p>
+                    <h2 class="section-title">Reels</h2>
+                </header>
+
+                <div class="reels-wrap reveal">
+                    <button class="icon-btn reels-nav prev" id="reelsPrev" type="button" aria-label="Scroll reels left">‹</button>
+
+                    <div class="reels-track" id="reelsTrack" tabindex="0" aria-label="Edited reels - scroll sideways">
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/1192285712900265" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 01">
+                            <div class="work-media grad-1">
+                                <img src="images/reel1.png" alt="Reel 01" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 01</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/702006099205614" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 02">
+                            <div class="work-media grad-2">
+                                <img src="images/reel2.png" alt="Reel 02" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 02</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/1920066705401335" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 03">
+                            <div class="work-media grad-3">
+                                <img src="images/reel3.png" alt="Reel 03" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 03</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/1074920697164867" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 04">
+                            <div class="work-media grad-4">
+                                <img src="images/reel4.png" alt="Reel 04" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 04</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/3284447618356665" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 05">
+                            <div class="work-media grad-5">
+                                <img src="images/reel5.png" alt="Reel 05" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 05</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                        <article class="work-card reel-card" data-video="https://www.facebook.com/reel/2898887803622118" data-vertical="true" tabindex="0" role="button" aria-label="Play Reel 06">
+                            <div class="work-media grad-6">
+                                <img src="images/reel6.png" alt="Reel 06" loading="lazy" data-multi-ext />
+                                <span class="play-badge" aria-hidden="true">▶</span>
+                            </div>
+                            <div class="work-overlay">
+                                <span class="work-tag">Reel</span>
+                                <h3>Reel Title 06</h3>
+                                <span class="work-link">▶ Play reel</span>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <button class="icon-btn reels-nav next" id="reelsNext" type="button" aria-label="Scroll reels right">›</button>
+                </div>
+
+                <p class="reels-hint">Swipe or drag sideways to see more →</p>
             </div>
         </section>
 
@@ -383,10 +481,67 @@
                             <p>Philippines</p>
                         </div>
                     </div>
+                </div>
 
-                    <!-- ADD MORE: copy a .timeline-item block above and edit it.
-                         Great for certifications, e.g.
-                         label: "Certification" / title: "Your Certificate Name" / text: "Issuer, Year" -->
+                <!-- ======== CERTIFICATES ========
+                     Images: images/cert1.jpg, cert2.jpg, cert3.jpg ... (a .png also works).
+                     Click a certificate to view it bigger. The 4th card ("More Certificates")
+                     expands extra certificates cert4 - cert8. Extra ones with no image file
+                     are skipped automatically, so you can add them one at a time.
+                     To rename a certificate: change the label text, data-caption and alt. -->
+                <div class="cert-block">
+                    <h3 class="cert-title reveal">Certifications</h3>
+
+                    <div class="cert-grid" id="certGrid">
+
+                        <article class="cert-card reveal" data-lightbox="certs" data-caption="Certificate 1" tabindex="0" role="button" aria-label="View Certificate 1">
+                            <img src="images/cert1.jpg" alt="Certificate 1" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 1</span>
+                        </article>
+
+                        <article class="cert-card reveal" data-lightbox="certs" data-caption="Certificate 2" tabindex="0" role="button" aria-label="View Certificate 2">
+                            <img src="images/cert2.jpg" alt="Certificate 2" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 2</span>
+                        </article>
+
+                        <article class="cert-card reveal" data-lightbox="certs" data-caption="Certificate 3" tabindex="0" role="button" aria-label="View Certificate 3">
+                            <img src="images/cert3.jpg" alt="Certificate 3" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 3</span>
+                        </article>
+
+                        <!-- 4th card: click to show more certificates -->
+                        <button type="button" class="cert-card cert-more reveal" id="certMoreBtn" aria-expanded="false" aria-controls="certMore">
+                            <img src="images/cert4.jpg" alt="" aria-hidden="true" data-multi-ext />
+                            <span class="cert-more-inner">
+                                <span class="cert-more-plus" id="certMorePlus">+</span>
+                                <span class="cert-more-text" id="certMoreText">More Certificates</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Extra certificates (hidden until the 4th card is clicked) -->
+                    <div class="cert-grid cert-extra-grid" id="certMore" hidden>
+                        <article class="cert-card cert-extra" data-optional data-lightbox="certs" data-caption="Certificate 4" tabindex="0" role="button" aria-label="View Certificate 4">
+                            <img src="images/cert4.jpg" alt="Certificate 4" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 4</span>
+                        </article>
+                        <article class="cert-card cert-extra" data-optional data-lightbox="certs" data-caption="Certificate 5" tabindex="0" role="button" aria-label="View Certificate 5">
+                            <img src="images/cert5.jpg" alt="Certificate 5" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 5</span>
+                        </article>
+                        <article class="cert-card cert-extra" data-optional data-lightbox="certs" data-caption="Certificate 6" tabindex="0" role="button" aria-label="View Certificate 6">
+                            <img src="images/cert6.jpg" alt="Certificate 6" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 6</span>
+                        </article>
+                        <article class="cert-card cert-extra" data-optional data-lightbox="certs" data-caption="Certificate 7" tabindex="0" role="button" aria-label="View Certificate 7">
+                            <img src="images/cert7.jpg" alt="Certificate 7" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 7</span>
+                        </article>
+                        <article class="cert-card cert-extra" data-optional data-lightbox="certs" data-caption="Certificate 8" tabindex="0" role="button" aria-label="View Certificate 8">
+                            <img src="images/cert8.jpg" alt="Certificate 8" loading="lazy" data-multi-ext />
+                            <span class="cert-label">Certificate 8</span>
+                        </article>
+                    </div>
                 </div>
             </div>
         </section>
@@ -402,44 +557,50 @@
                 </header>
 
                 <div class="contact-grid">
-                    <!-- Social links - replace every href="#" with your real link -->
                     <div class="socials glass reveal">
                         <h3>Find me online</h3>
                         <ul>
                             <li>
-                                <a href="https://youtube.com/@your-channel" target="_blank" rel="noopener" class="social-link">
+                                <a href="https://www.youtube.com/channel/UCGBt_NqGpjgnqz9bnCAtAnw" target="_blank" rel="noopener" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" /></svg></span>
-                                    <span>YouTube</span>
+                                    <span class="social-text"><span class="social-name">Direk Jam</span><small>YouTube</small></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://facebook.com/your-username" target="_blank" rel="noopener" class="social-link">
+                                <a href="https://www.facebook.com/jampatataz6" target="_blank" rel="noopener" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z" /></svg></span>
-                                    <span>Facebook</span>
+                                    <span class="social-text"><span class="social-name">Jam Guevarra</span><small>Facebook</small></span>
                                 </a>
                             </li>
                             <li>
+                                <!-- TODO: replace your-username with your Instagram handle -->
                                 <a href="https://instagram.com/your-username" target="_blank" rel="noopener" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg></span>
-                                    <span>Instagram</span>
+                                    <span class="social-text"><span class="social-name">Instagram</span><small>Social</small></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://github.com/your-username" target="_blank" rel="noopener" class="social-link">
+                                <a href="https://github.com/jamzer6" target="_blank" rel="noopener" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z" /></svg></span>
-                                    <span>GitHub</span>
+                                    <span class="social-text"><span class="social-name">jamzer6</span><small>GitHub</small></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:your.email@example.com" class="social-link">
+                                <a href="mailto:jamvincentguevarra@gmail.com" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg></span>
-                                    <span>your.email@example.com</span>
+                                    <span class="social-text"><span class="social-name">jamvincentguevarra@gmail.com</span><small>Email</small></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="tel:+639000000000" class="social-link">
+                                <a href="tel:+639770866821" class="social-link">
                                     <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg></span>
-                                    <span>+63 900 000 0000</span>
+                                    <span class="social-text"><span class="social-name">0977 086 6821</span><small>GLOBE</small></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+639939518325" class="social-link">
+                                    <span class="social-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg></span>
+                                    <span class="social-text"><span class="social-name">0993 951 8325</span><small>DITO</small></span>
                                 </a>
                             </li>
                         </ul>
@@ -488,6 +649,17 @@
         </div>
         <!-- Backup link shown under the player (set by script.js) -->
         <a id="videoFallback" class="modal-fallback" href="#" target="_blank" rel="noopener" hidden>Open video ↗</a>
+    </div>
+
+    <!-- IMAGE VIEWER (certificates and design cards open here) -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="icon-btn lightbox-close" id="lightboxClose" type="button" aria-label="Close image">✕</button>
+        <button class="icon-btn lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Previous image">‹</button>
+        <figure class="lightbox-figure">
+            <img id="lightboxImg" alt="" />
+            <figcaption id="lightboxCaption"></figcaption>
+        </figure>
+        <button class="icon-btn lightbox-nav next" id="lightboxNext" type="button" aria-label="Next image">›</button>
     </div>
 
     <script src="script.js"></script>
