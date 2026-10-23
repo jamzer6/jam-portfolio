@@ -244,17 +244,16 @@
                          - The thumbnail is pulled from YouTube automatically. To use your own image instead,
                            add src="images/your-image.jpg" to the <img> tag.
                          - Add data-vertical="true" if the video is a YouTube Short (9:16 vertical). -->
-                    <article class="work-card tall" data-category="editing"
-                             data-video="https://www.facebook.com/share/v/1FU17HdFay/"
-                             data-vertical="true"
-                             tabindex="0" role="button" aria-label="Play Gameplay Highlights">
+                    <article class="work-card tall" data-category="editing" data-video="https://www.facebook.com/share/v/1FU17HdFay/" tabindex="0" role="button" aria-label="Play Gameplay Highlights">
                         <div class="work-media grad-4">
+                            <!-- Facebook videos have no automatic thumbnail: save your own image as images/edit-yt-highlights.jpg
+                                 Add data-vertical="true" to the <article> line above if this is a vertical Reel. -->
                             <img src="images/aws1.png" alt="Gameplay Highlights" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Editing</span>
-                            <h3>Gameplay Highlights</h3>
+                            <h3>YouTube Gameplay Highlights</h3>
                             <p>Fast-paced gameplay montages with rhythm-driven cuts and color work.</p>
                             <span class="work-link">▶ Play video</span>
                         </div>
@@ -263,7 +262,7 @@
                     <!-- DESIGNS 1 -->
                     <article class="work-card" data-category="designs">
                         <div class="work-media grad-5">
-                            <img src="images/design-panimalay.jpg" alt="Panimalay Indie Film Animations" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/scape3.jpg" alt="Panimalay Indie Film Animations" loading="lazy" onerror="this.style.display='none'" />
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Designs</span>
@@ -276,7 +275,7 @@
                     <!-- DESIGNS 2 -->
                     <article class="work-card" data-category="designs">
                         <div class="work-media grad-6">
-                            <img src="images/scape3.jpg" alt="Emman's Ref and Aircon Brand Identity" loading="lazy" onerror="this.style.display='none'" />
+                            <img src="images/design-emman-brand.jpg" alt="Emman's Ref and Aircon Brand Identity" loading="lazy" onerror="this.style.display='none'" />
                         </div>
                         <div class="work-overlay">
                             <span class="work-tag">Designs</span>
@@ -302,7 +301,7 @@
                     <!-- ================= FILM TRAILERS (new) ================= -->
                     <!-- LANDSCAPE CARD 1 (class "wide" = twice as wide)
                          Replace VIDEO_ID_1 with your trailer's YouTube link or ID, then edit title + description. -->
-                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/2cNXvc8w7gA" tabindex="0" role="button" aria-label="Play Film Trailer 01">
+                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/O3CVEZNB82c" tabindex="0" role="button" aria-label="Play Film Trailer 01">
                         <div class="work-media grad-5">
                             <img alt="Film Trailer 01" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
@@ -316,7 +315,7 @@
                     </article>
 
                     <!-- LANDSCAPE CARD 2 -->
-                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/O3CVEZNB82c" tabindex="0" role="button" aria-label="Play Film Trailer 02">
+                    <article class="work-card wide" data-category="films" data-video="https://youtu.be/2cNXvc8w7gA" tabindex="0" role="button" aria-label="Play Film Trailer 02">
                         <div class="work-media grad-2">
                             <img alt="Film Trailer 02" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
@@ -331,7 +330,7 @@
 
                     <!-- TALL CARD (class "tall" = twice as high). Great for a movie poster:
                          put your poster at images/film-poster.jpg. The trailer still plays when clicked. -->
-                    <article class="work-card tall" data-category="films" data-video="https://www.facebook.com/share/v/19fuJoVvW6/" tabindex="0" role="button" aria-label="Play Film Trailer 03">
+                    <article class="work-card tall" data-category="films" data-video="https://youtu.be/ZSlfgxLcBt4" tabindex="0" role="button" aria-label="Play Film Trailer 03">
                         <div class="work-media grad-7">
                             <img src="images/ICP.png" alt="Film Trailer 03 poster" loading="lazy" onerror="this.style.display='none'" />
                             <span class="play-badge" aria-hidden="true">▶</span>
@@ -348,7 +347,7 @@
 
                 <!-- YOUTUBE CHANNEL BUTTON under the grid: replace the href with your channel link -->
                 <div class="portfolio-cta reveal">
-                    <a href="https://www.youtube.com/channel/UCGBt_NqGpjgnqz9bnCAtAnw" target="_blank" rel="noopener" class="btn btn-primary">
+                    <a href="https://youtube.com/@your-channel" target="_blank" rel="noopener" class="btn btn-primary">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z" /></svg>
                         Visit My YouTube Channel
                     </a>
@@ -487,6 +486,8 @@
         <div class="modal-inner">
             <div class="modal-body" id="videoModalBody"></div>
         </div>
+        <!-- Backup link shown under the player (set by script.js) -->
+        <a id="videoFallback" class="modal-fallback" href="#" target="_blank" rel="noopener" hidden>Open video ↗</a>
     </div>
 
     <script src="script.js"></script>
