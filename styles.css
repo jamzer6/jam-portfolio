@@ -1957,3 +1957,25 @@ button {
         min-height: 130px;
         resize: none;
     }
+
+/* Contact: stack the two boxes on tablets/phones (must come AFTER the 50/50 rule above) */
+@media (max-width: 960px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+        grid-template-rows: none;
+    }
+
+        .contact-form .field:nth-of-type(3) textarea {
+            height: auto;
+            min-height: 140px;
+        }
+}
+
+@media (max-width: 520px) {
+    .socials, .contact-form {
+        padding: 22px 18px;
+    }
+}
