@@ -13,10 +13,10 @@
 
     <!-- Apply saved theme BEFORE paint to avoid a flash of the wrong theme -->
     <script>
-                    try {
-                      const saved = localStorage.getItem("theme");
-                      if (saved) document.documentElement.setAttribute("data-theme", saved);
-                    } catch (e) {}
+                            try {
+                              const saved = localStorage.getItem("theme");
+                              if (saved) document.documentElement.setAttribute("data-theme", saved);
+                            } catch (e) {}
     </script>
 
     <!-- Google Fonts: Poppins (body/UI) + Playfair Display & Bebas Neue (display) -->
@@ -46,7 +46,9 @@
             <a href="#home" class="nav-link">Home</a>
             <a href="#about" class="nav-link">About</a>
             <a href="#portfolio" class="nav-link">Works</a>
+            <a href="#motion" class="nav-link">Motion</a>
             <a href="#reels" class="nav-link">Reels</a>
+            <a href="#stack" class="nav-link">Stack</a>
             <a href="#background" class="nav-link">Background</a>
             <a href="#contact" class="nav-link">Contact</a>
         </nav>
@@ -353,6 +355,52 @@
         </section>
 
         <!-- =========================================================
+             MOTION GRAPHICS: 2 landscape (16:9) video cards
+             HOW TO EDIT:
+             1. Replace VIDEO_ID_MOTION_1 / VIDEO_ID_MOTION_2 in data-video with your
+                YouTube link (https://youtu.be/xxxx) or Facebook video link.
+             2. Cover image: put images/motion1.jpg / motion2.jpg (a .png also works).
+                YouTube only: delete the src="..." on the <img> to use YouTube's thumbnail automatically.
+             3. Change the title and description text.
+        ========================================================== -->
+        <section class="section" id="motion">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">Animated Works</p>
+                    <h2 class="section-title">Motion Graphics</h2>
+                </header>
+
+                <div class="motion-grid reveal">
+                    <article class="work-card motion-card" data-video="https://www.facebook.com/reel/1088817233339728" tabindex="0" role="button" aria-label="Play Motion Graphics 01">
+                        <div class="work-media grad-3">
+                            <img src="images/motion1.jpg" alt="Motion Graphics 01" loading="lazy" data-multi-ext />
+                            <span class="play-badge" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="work-overlay">
+                            <span class="work-tag">Motion Graphics</span>
+                            <h3>Motion Graphics Title 01</h3>
+                            <p>Short description of this motion graphics piece.</p>
+                            <span class="work-link">▶ Play video</span>
+                        </div>
+                    </article>
+
+                    <article class="work-card motion-card" data-video="https://youtu.be/g53Xd8WJUa4" tabindex="0" role="button" aria-label="Play Motion Graphics 02">
+                        <div class="work-media grad-5">
+                            <img src="images/motion2.png" alt="Motion Graphics 02" loading="lazy" data-multi-ext />
+                            <span class="play-badge" aria-hidden="true">▶</span>
+                        </div>
+                        <div class="work-overlay">
+                            <span class="work-tag">Motion Graphics</span>
+                            <h3>Motion Graphics Title 02</h3>
+                            <p>Short description of this motion graphics piece.</p>
+                            <span class="work-link">▶ Play video</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
              REELS: tall vertical reels you scroll sideways
              HOW TO EDIT A REEL:
              1. Replace VIDEO_ID_REEL_x with the reel's Facebook / YouTube Shorts link.
@@ -454,6 +502,29 @@
         </section>
 
         <!-- =========================================================
+             TECH & SOFTWARE STACK: logos fall and bounce with gravity.
+             The logo list (names, colours, groups) lives in script.js (const STACK).
+             Want the real logo instead of the built-in badge? Drop a file into
+             images/logos/ named like the "file" value in STACK (e.g. images/logos/python.svg
+             or python.png) and it is used automatically.
+        ========================================================== -->
+        <section class="section" id="stack">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">What I Use</p>
+                    <h2 class="section-title">Tech &amp; Software Stack</h2>
+                </header>
+
+                <div class="stack-stage glass reveal" id="stackStage" aria-label="Floating logos of my tech and software stack. Drag them around.">
+                    <p class="stack-hint" id="stackHint">Drag &amp; throw the logos around</p>
+                    <button type="button" class="btn btn-ghost stack-shake" id="stackShake">Shake ↑</button>
+                </div>
+
+                <div class="stack-legend reveal" id="stackLegend"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
              BACKGROUND & CERTIFICATIONS
         ========================================================== -->
         <section class="section" id="background">
@@ -481,6 +552,29 @@
                             <p>Philippines</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- ======== RESUME / CV ========
+                     Click the card to open the CV in a pop-up (same viewer as the certificates)
+                     with a Download button.
+                     1. Preview image:  images/cv.jpg  (a .png also works) - an image of your CV page 1
+                     2. Download file:  put your CV in the main folder as cv.pdf
+                        (or change data-download below to the file's real name / path)
+                     3. data-download-name = the file name the visitor gets when downloading -->
+                <div class="cv-block">
+                    <h3 class="cert-title reveal">Resume / CV</h3>
+
+                    <article class="cv-card glass reveal" data-lightbox="cv" data-caption="Jam Guevarra - Curriculum Vitae" data-download="cv.pdf" data-download-name="Jam-Guevarra-CV.pdf" tabindex="0" role="button" aria-label="View my CV">
+                        <div class="cv-thumb">
+                            <img src="images/cv.png" alt="Preview of Jam Guevarra's CV" loading="lazy" data-multi-ext />
+                        </div>
+                        <div class="cv-info">
+                            <span class="timeline-label">Curriculum Vitae</span>
+                            <h3>Jam Guevarra</h3>
+                            <p>Take a look at my education, skills and experience. Click to preview it, then download your own copy.</p>
+                            <span class="btn btn-primary">View CV</span>
+                        </div>
+                    </article>
                 </div>
 
                 <!-- ======== CERTIFICATES ========
@@ -658,6 +752,7 @@
         <figure class="lightbox-figure">
             <img id="lightboxImg" alt="" />
             <figcaption id="lightboxCaption"></figcaption>
+            <a id="lightboxDownload" class="btn btn-primary lightbox-download" href="#" download hidden>⬇ Download CV</a>
         </figure>
         <button class="icon-btn lightbox-nav next" id="lightboxNext" type="button" aria-label="Next image">›</button>
     </div>

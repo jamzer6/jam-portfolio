@@ -1726,3 +1726,234 @@ button {
         transform: none;
     }
 }
+
+
+/* =========================================================
+   19. MOTION GRAPHICS (2 landscape cards, fitted to the page)
+   ========================================================= */
+.motion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.motion-card {
+    grid-row: auto;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+    .motion-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+}
+
+/* =========================================================
+   20. TECH & SOFTWARE STACK (physics logos)
+   ========================================================= */
+.stack-stage {
+    position: relative;
+    height: clamp(420px, 62vh, 560px);
+    overflow: hidden;
+    border-radius: var(--radius);
+    touch-action: pan-y; /* the page still scrolls on phones */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.stack-hint {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: opacity 0.4s;
+}
+
+.stack-shake {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 3;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+}
+
+.stack-logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--d, 84px);
+    height: var(--d, 84px);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    will-change: transform;
+    pointer-events: none; /* the stage handles all pointer input */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.14);
+}
+
+    .stack-logo.grabbed {
+        box-shadow: 0 16px 34px var(--glow), inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+    }
+
+    .stack-logo img,
+    .stack-logo svg {
+        width: 62%;
+        height: 62%;
+        object-fit: contain;
+    }
+
+.stack-glyph {
+    font-weight: 700;
+    line-height: 1;
+    font-size: calc(var(--d, 84px) * 0.28);
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+.stack-legend {
+    margin-top: 32px;
+    display: grid;
+    gap: 22px;
+}
+
+.stack-legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.stack-legend-title {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.stack-chip {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--heading);
+}
+
+/* =========================================================
+   21. RESUME / CV CARD + DOWNLOAD BUTTON IN THE VIEWER
+   ========================================================= */
+.cv-block {
+    margin-top: 72px;
+}
+
+.cv-card {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: transform 0.4s var(--ease), border-color 0.3s;
+}
+
+    .cv-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--accent);
+    }
+
+.cv-thumb {
+    flex: 0 0 170px;
+    aspect-ratio: 210 / 297; /* A4 portrait */
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f2a66, #2f8fe6);
+    box-shadow: var(--shadow);
+}
+
+    .cv-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        transition: transform 0.6s var(--ease);
+    }
+
+.cv-card:hover .cv-thumb img {
+    transform: scale(1.05);
+}
+
+.cv-info h3 {
+    font-size: 1.4rem;
+    color: var(--heading);
+    margin: 6px 0 8px;
+}
+
+.cv-info p {
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+.lightbox-download {
+    margin-top: 16px;
+}
+
+    .lightbox-download[hidden] {
+        display: none;
+    }
+
+@media (max-width: 600px) {
+    .cv-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .cv-thumb {
+        flex-basis: auto;
+        width: min(200px, 60%);
+    }
+}
+
+/* Eight nav links now: tighten spacing a little on mid-size screens */
+@media (min-width: 821px) and (max-width: 1100px) {
+    .nav-link {
+        padding: 8px 11px;
+        font-size: 0.85rem;
+    }
+}
+
+.stack-shake[hidden], .stack-hint[hidden] {
+    display: none;
+}
+
+/* ---------- Contact: both boxes the same width and height ---------- */
+.contact-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+}
+
+.contact-form {
+    grid-template-rows: auto auto 1fr auto auto; /* the message box takes the leftover height */
+}
+
+    .contact-form .field:nth-of-type(3) textarea {
+        height: 100%;
+        min-height: 130px;
+        resize: none;
+    }

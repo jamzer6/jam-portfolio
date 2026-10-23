@@ -12,7 +12,8 @@
    6d. Reels scroller (arrows + mouse drag)
    6e. Certificates: "More Certificates" expand
    6f. Image names: tries .jpg / .png / .jpeg / .webp automatically
-   6g. Image viewer (certificates + design cards)
+   6g. Image viewer (certificates, design cards + CV with download button)
+   6h. Tech & software stack: floating logos with gravity (edit STACK)
    7.  Contact form
    8.  Footer year
    ========================================================= */
@@ -397,6 +398,7 @@
         const lbPrev = document.getElementById("lightboxPrev");
         const lbNext = document.getElementById("lightboxNext");
         const lbClose = document.getElementById("lightboxClose");
+        const lbDownload = document.getElementById("lightboxDownload");
         const lbItems = Array.from(document.querySelectorAll("[data-lightbox]"));
         let group = [], index = 0, lbLastFocus = null;
 
@@ -419,6 +421,16 @@
             const several = group.length > 1;
             lbPrev.hidden = !several;
             lbNext.hidden = !several;
+
+            // Download button: only for items that have data-download (the CV)
+            if (lbDownload) {
+                const file = el.dataset.download;
+                lbDownload.hidden = !file;
+                if (file) {
+                    lbDownload.href = file;
+                    lbDownload.setAttribute("download", el.dataset.downloadName || "");
+                }
+            }
         }
 
         function openLightbox(el) {
@@ -458,6 +470,270 @@
             else if (e.key === "ArrowLeft") showAt(index - 1);
             else if (e.key === "ArrowRight") showAt(index + 1);
         });
+    }
+
+    /* ---------- 6h. TECH & SOFTWARE STACK (floating logos with gravity) ----------
+       >>> EDIT THE LOGOS HERE <<<
+       name:  shown in the legend + tooltip
+       group: "tech" or "software" (decides which legend row it appears in)
+       file:  optional real logo -> images/logos/<file>.svg or .png (used automatically if it exists)
+       bg / fg: colours of the built-in badge (used when no logo file is found)
+       glyph: text on the badge       icon: optional inline SVG that replaces the glyph */
+    const STACK = [
+        { name: "Python", group: "tech", file: "python", bg: "linear-gradient(135deg,#3776ab 50%,#ffd43b 50%)", fg: "#ffffff", glyph: "Py" },
+        { name: "Java", group: "tech", file: "java", bg: "#ffffff", fg: "#e76f00", glyph: "Java" },
+        {
+            name: "ReactJs", group: "tech", file: "react", bg: "#20232a", fg: "#61dafb",
+            icon: '<svg viewBox="-12 -12 24 24" fill="none" stroke="#61dafb" stroke-width="1"><circle r="2" fill="#61dafb" stroke="none"/><ellipse rx="10" ry="4"/><ellipse rx="10" ry="4" transform="rotate(60)"/><ellipse rx="10" ry="4" transform="rotate(120)"/></svg>'
+        },
+        { name: "Node", group: "tech", file: "node", bg: "#2b2f2b", fg: "#8cc84b", glyph: "Node" },
+        { name: "HTML", group: "tech", file: "html", bg: "#e34f26", fg: "#ffffff", glyph: "HTML" },
+        { name: "CSS", group: "tech", file: "css", bg: "#1572b6", fg: "#ffffff", glyph: "CSS" },
+        { name: "SQL", group: "tech", file: "sql", bg: "#00758f", fg: "#ffffff", glyph: "SQL" },
+        { name: "Photoshop", group: "software", file: "photoshop", bg: "#001e36", fg: "#31a8ff", glyph: "Ps" },
+        { name: "Premiere Pro", group: "software", file: "premiere", bg: "#00005b", fg: "#9999ff", glyph: "Pr" },
+        { name: "After Effects", group: "software", file: "aftereffects", bg: "#00005b", fg: "#9999ff", glyph: "Ae" },
+        { name: "DaVinci Resolve", group: "software", file: "davinci", bg: "radial-gradient(circle at 30% 30%,#3a3a3a,#111)", fg: "#ffffff", glyph: "DR" },
+        { name: "CapCut", group: "software", file: "capcut", bg: "#000000", fg: "#ffffff", glyph: "CapCut" },
+        { name: "Canva", group: "software", file: "canva", bg: "linear-gradient(135deg,#00c4cc,#7d2ae8)", fg: "#ffffff", glyph: "Canva" },
+        { name: "Lightroom", group: "software", file: "lightroom", bg: "#001e36", fg: "#31a8ff", glyph: "Lr" }
+    ];
+
+    const stage = document.getElementById("stackStage");
+    if (stage) {
+        const legend = document.getElementById("stackLegend");
+        const shakeBtn = document.getElementById("stackShake");
+        const hint = document.getElementById("stackHint");
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // --- Build the logo bubbles + the legend (both come from STACK) ---
+        const bodies = STACK.map((item) => {
+            const el = document.createElement("div");
+            el.className = "stack-logo";
+            el.title = item.name;
+            el.style.background = item.bg;
+            el.style.color = item.fg;
+            el.innerHTML = item.icon || `<span class="stack-glyph">${item.glyph}</span>`;
+            stage.appendChild(el);
+
+            // Use a real logo file if one exists in images/logos/
+            if (item.file) {
+                const probe = new Image();
+                const exts = ["svg", "png", "webp", "jpg"];
+                let i = 0;
+                probe.onload = () => {
+                    probe.alt = item.name;
+                    el.style.background = "#ffffff";
+                    el.innerHTML = "";
+                    el.appendChild(probe);
+                };
+                probe.onerror = () => { if (++i < exts.length) probe.src = `images/logos/${item.file}.${exts[i]}`; };
+                probe.src = `images/logos/${item.file}.${exts[0]}`;
+            }
+            return { el, item, x: 0, y: 0, vx: 0, vy: 0, r: 40 };
+        });
+
+        [["tech", "Tech Stack"], ["software", "Software Stack"]].forEach(([group, title]) => {
+            const row = document.createElement("div");
+            row.className = "stack-legend-row";
+            row.innerHTML = `<span class="stack-legend-title">${title}</span>` +
+                STACK.filter((s) => s.group === group).map((s) => `<span class="stack-chip">${s.name}</span>`).join("");
+            legend.appendChild(row);
+        });
+
+        // --- Physics world ---
+        const GRAVITY = 1700;        // px/s^2 (higher = heavier)
+        const BOUNCE_WALL = 0.55;    // 0 = no bounce, 1 = perfect bounce
+        const BOUNCE_LOGO = 0.45;
+        let W = 0, H = 0;
+        let held = null, pointer = { x: 0, y: 0 };
+        let running = false, last = 0, spawned = false;
+
+        function measure() {
+            W = stage.clientWidth;
+            H = stage.clientHeight;
+            const d = W < 520 ? 58 : W < 820 ? 72 : 88;
+            stage.style.setProperty("--d", d + "px");
+            bodies.forEach((b) => {
+                b.r = d / 2;
+                b.x = Math.min(Math.max(b.x, b.r), W - b.r);
+                b.y = Math.min(b.y, H - b.r);
+            });
+        }
+
+        function render() {
+            bodies.forEach((b) => {
+                const tilt = Math.max(-14, Math.min(14, b.vx / 40));
+                b.el.style.transform = `translate3d(${b.x - b.r}px, ${b.y - b.r}px, 0) rotate(${tilt}deg)`;
+            });
+        }
+
+        function spawn() {
+            // drop them in from above the stage, staggered, at random x
+            bodies.forEach((b, i) => {
+                b.x = b.r + Math.random() * Math.max(1, W - b.r * 2);
+                b.y = -b.r - i * (b.r * 1.6);
+                b.vx = (Math.random() - 0.5) * 240;
+                b.vy = 0;
+            });
+            spawned = true;
+        }
+
+        function step(dt) {
+            bodies.forEach((b) => {
+                if (b === held) {
+                    // the grabbed logo follows the pointer; its velocity becomes the "throw"
+                    const tx = Math.min(Math.max(pointer.x, b.r), W - b.r);
+                    const ty = Math.min(Math.max(pointer.y, b.r), H - b.r);
+                    b.vx = (tx - b.x) * 22;
+                    b.vy = (ty - b.y) * 22;
+                    b.x += b.vx * dt;
+                    b.y += b.vy * dt;
+                    return;
+                }
+                b.vy += GRAVITY * dt;
+                b.vx *= 0.9985;
+                b.x += b.vx * dt;
+                b.y += b.vy * dt;
+
+                // walls (no ceiling, so new logos can drop in from above)
+                if (b.x < b.r) { b.x = b.r; b.vx = -b.vx * BOUNCE_WALL; }
+                else if (b.x > W - b.r) { b.x = W - b.r; b.vx = -b.vx * BOUNCE_WALL; }
+                if (b.y > H - b.r) {
+                    b.y = H - b.r;
+                    b.vy = -b.vy * BOUNCE_WALL;
+                    b.vx *= 0.985;                          // floor friction
+                    if (Math.abs(b.vy) < 40) b.vy = 0;      // stop tiny jitter
+                }
+            });
+
+            // logo-vs-logo collisions (a few passes so piles stay stable)
+            for (let pass = 0; pass < 3; pass++) {
+                for (let i = 0; i < bodies.length; i++) {
+                    for (let j = i + 1; j < bodies.length; j++) {
+                        const a = bodies[i], b = bodies[j];
+                        const dx = b.x - a.x, dy = b.y - a.y;
+                        const min = a.r + b.r;
+                        const d2 = dx * dx + dy * dy;
+                        if (d2 >= min * min) continue;
+                        const dist = Math.sqrt(d2) || 0.001;
+                        const nx = dx / dist, ny = dy / dist;
+                        const overlap = min - dist;
+
+                        // push apart (a held logo is immovable)
+                        const aw = a === held ? 0 : 1, bw = b === held ? 0 : 1;
+                        const tot = aw + bw || 1;
+                        a.x -= nx * overlap * (aw / tot); a.y -= ny * overlap * (aw / tot);
+                        b.x += nx * overlap * (bw / tot); b.y += ny * overlap * (bw / tot);
+
+                        // bounce along the contact normal
+                        const rel = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+                        if (rel < 0) {
+                            const imp = -(1 + BOUNCE_LOGO) * rel / tot;
+                            a.vx -= nx * imp * aw; a.vy -= ny * imp * aw;
+                            b.vx += nx * imp * bw; b.vy += ny * imp * bw;
+                        }
+                    }
+                }
+            }
+        }
+
+        function frame(now) {
+            if (!running) return;
+            const dt = Math.min((now - last) / 1000, 1 / 30);   // cap so a lag spike can't explode the sim
+            last = now;
+            step(dt / 2); step(dt / 2);                          // 2 sub-steps = fewer glitches
+            render();
+            requestAnimationFrame(frame);
+        }
+
+        function start() {
+            if (running) return;
+            running = true;
+            last = performance.now();
+            requestAnimationFrame(frame);
+        }
+
+        // --- Pointer input: mouse drags + throws; touch taps give a hop (so page scrolling keeps working) ---
+        const localPoint = (e) => {
+            const rect = stage.getBoundingClientRect();
+            return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        };
+        const hit = (p) => {
+            for (let i = bodies.length - 1; i >= 0; i--) {
+                const b = bodies[i];
+                if (Math.hypot(p.x - b.x, p.y - b.y) <= b.r) return b;
+            }
+            return null;
+        };
+
+        stage.addEventListener("pointerdown", (e) => {
+            if (reduceMotion || e.target.closest("button")) return;
+            const p = localPoint(e);
+            const b = hit(p);
+            if (!b) return;
+            if (e.pointerType === "mouse") {
+                held = b;
+                pointer = p;
+                b.el.classList.add("grabbed");
+                stage.style.cursor = "grabbing";
+                stage.setPointerCapture(e.pointerId);
+                if (hint) hint.style.opacity = "0";
+            } else {
+                b.vy = -650;                                   // tap = little hop
+                b.vx += (Math.random() - 0.5) * 500;
+            }
+        });
+
+        stage.addEventListener("pointermove", (e) => {
+            const p = localPoint(e);
+            if (held) { pointer = p; return; }
+            if (e.pointerType === "mouse" && !reduceMotion) stage.style.cursor = hit(p) ? "grab" : "";
+        });
+
+        const release = () => {
+            if (!held) return;
+            held.el.classList.remove("grabbed");
+            held = null;
+            stage.style.cursor = "";
+        };
+        stage.addEventListener("pointerup", release);
+        stage.addEventListener("pointercancel", release);
+
+        // Shake: throws everything upward
+        shakeBtn.addEventListener("click", () => {
+            bodies.forEach((b) => {
+                b.vy = -(900 + Math.random() * 900);
+                b.vx += (Math.random() - 0.5) * 900;
+            });
+        });
+
+        // --- Start when scrolled into view, pause when off-screen (saves battery) ---
+        measure();
+        window.addEventListener("resize", () => { measure(); if (!running) render(); });
+
+        if (reduceMotion) {
+            // No animation: let the logos settle instantly and keep them still
+            spawn();
+            for (let i = 0; i < 600; i++) step(1 / 60);
+            render();
+            shakeBtn.hidden = true;
+            if (hint) hint.hidden = true;
+        } else if ("IntersectionObserver" in window) {
+            new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        if (!spawned) { measure(); spawn(); }
+                        start();
+                    } else {
+                        running = false;
+                    }
+                });
+            }, { threshold: 0.25 }).observe(stage);
+        } else {
+            spawn();
+            start();
+        }
     }
 
     /* ---------- 7. CONTACT FORM ---------- */
