@@ -13,10 +13,10 @@
 
     <!-- Apply saved theme BEFORE paint to avoid a flash of the wrong theme -->
     <script>
-                            try {
-                              const saved = localStorage.getItem("theme");
-                              if (saved) document.documentElement.setAttribute("data-theme", saved);
-                            } catch (e) {}
+                                    try {
+                                      const saved = localStorage.getItem("theme");
+                                      if (saved) document.documentElement.setAttribute("data-theme", saved);
+                                    } catch (e) {}
     </script>
 
     <!-- Google Fonts: Poppins (body/UI) + Playfair Display & Bebas Neue (display) -->
@@ -183,6 +183,13 @@
                 <header class="section-head reveal">
                     <p class="eyebrow">Previous Works</p>
                     <h2 class="section-title">Portfolio</h2>
+
+                    <!-- Headline button -> the online gallery (magazine) in the /gallery folder -->
+                    <a href="gallery/index.html" class="btn btn-primary gallery-cta">
+                        <span>Enter the Online Gallery</span>
+                        <span class="gallery-cta-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                    <p class="gallery-cta-note">Videography &middot; Editing &middot; Photography Album</p>
                 </header>
 
                 <!-- Filter tabs ("All" and "Films" are extras - delete a button if you don't want it) -->

@@ -1979,3 +1979,82 @@ button {
         padding: 22px 18px;
     }
 }
+
+/* Navbar buttons: keep the menu icon centered, and don't stay tilted after a tap on touch screens */
+.menu-btn {
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .menu-btn:hover {
+    transform: none;
+}
+
+@media (hover: none) {
+    .navbar .icon-btn:hover {
+        transform: none;
+        background: transparent;
+    }
+}
+
+/* Menu (three lines) button: lines sit fully inside the circle, centered */
+.menu-btn {
+    box-sizing: border-box;
+    padding: 0;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden;
+}
+
+    .menu-btn span {
+        display: block;
+        flex: none;
+        width: 18px;
+        height: 2px;
+        margin: 0;
+    }
+
+
+/* =========================================================
+   22. PORTFOLIO: HEADLINE BUTTON TO THE ONLINE GALLERY
+   ========================================================= */
+.gallery-cta {
+    margin-top: 28px;
+    padding: 17px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.gallery-cta-arrow {
+    display: inline-block;
+    font-size: 1.2em;
+    transition: transform 0.35s var(--ease);
+}
+
+.gallery-cta:hover .gallery-cta-arrow {
+    transform: translateX(6px);
+}
+
+.gallery-cta-note {
+    margin-top: 14px;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+@media (max-width: 520px) {
+    .gallery-cta {
+        padding: 15px 28px;
+        font-size: 0.95rem;
+    }
+
+    .gallery-cta-note {
+        letter-spacing: 0.14em;
+        font-size: 0.7rem;
+    }
+}

@@ -1,7 +1,32 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:gallery\\gallery.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:gallery\\gallery.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:gallery\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +34,105 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\index.html",
+              "RelativeDocumentMoniker": "gallery\\index.html",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\index.html",
+              "RelativeToolTip": "gallery\\index.html",
+              "ViewState": "AgIAAIUBAAAAAAAAAAAAAI0BAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-10-25T06:10:22.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "gallery.js",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.js",
+              "RelativeDocumentMoniker": "gallery\\gallery.js",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.js",
+              "RelativeToolTip": "gallery\\gallery.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-25T06:10:21.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "gallery.css",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.css",
+              "RelativeDocumentMoniker": "gallery\\gallery.css",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\gallery\\gallery.css",
+              "RelativeToolTip": "gallery\\gallery.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-10-25T06:10:20.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "script.js",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\script.js",
+              "RelativeDocumentMoniker": "script.js",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\script.js",
+              "RelativeToolTip": "script.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-25T06:07:07.787Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\index.html",
+              "RelativeDocumentMoniker": "index.html",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\index.html",
+              "RelativeToolTip": "index.html",
+              "ViewState": "AgIAAOICAAAAAAAAAAAiwO4CAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-10-25T06:06:34.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "styles.css",
+              "DocumentMoniker": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\styles.css",
+              "RelativeDocumentMoniker": "styles.css",
+              "ToolTip": "C:\\Users\\jamze\\OneDrive\\Documents\\GitHub\\jam-portfolio\\jamzer6\\jam-portfolio\\styles.css",
+              "RelativeToolTip": "styles.css",
+              "ViewState": "AgIAAO4HAAAAAAAAAAAiwAwIAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-10-23T17:10:14.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             }
           ]
         }
