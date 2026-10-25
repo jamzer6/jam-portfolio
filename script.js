@@ -191,6 +191,17 @@
         const isPlaceholder = (id) => !id || /VIDEO_ID|YOUR_/i.test(id);
         // Facebook links (facebook.com or fb.watch) are embedded with Facebook's own player
         const isFacebook = (value) => /facebook\.com|fb\.watch/i.test(value || "");
+        // Facebook embeds are most reliable with a clean link: removes tracking bits like ?mibextid=...&rdid=...
+        // and turns .../watch/?v=123&... into .../watch/?v=123
+        const cleanFacebookUrl = (u) => {
+            try {
+                const url = new URL(u);
+                if (!/(^|\.)facebook\.com$/i.test(url.hostname)) return u;      // fb.watch etc. are left alone
+                const v = url.searchParams.get("v");
+                if (v && /^\d+$/.test(v)) return `https://www.facebook.com/watch/?v=${v}`;
+                return `https://www.facebook.com${url.pathname}`;                // reels, /videos/123/ ... minus the query
+            } catch (e) { return u; }
+        };
 
         const videoCards = document.querySelectorAll(".work-card[data-video]");
 
@@ -207,6 +218,7 @@
         function openVideo(card) {
             const raw = (card.dataset.video || "").trim();
             const fb = isFacebook(raw);
+            const fbUrl = fb ? cleanFacebookUrl(raw) : "";
             const id = fb ? raw : parseYouTubeId(raw);
             const fallback = document.getElementById("videoFallback");
             lastFocused = document.activeElement;
@@ -222,10 +234,10 @@
             } else {
                 const frame = document.createElement("iframe");
                 frame.src = fb
-                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(raw)}&show_text=false&autoplay=true`
+                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(fbUrl)}&show_text=false&autoplay=true`
                     : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
                 // Backup link in case a video refuses to embed
-                fallback.href = fb ? raw : `https://www.youtube.com/watch?v=${id}`;
+                fallback.href = fb ? fbUrl : `https://www.youtube.com/watch?v=${id}`;
                 fallback.textContent = fb ? "Open on Facebook ↗" : "Open on YouTube ↗";
                 fallback.hidden = false;
                 frame.title = card.getAttribute("aria-label") || "Video";

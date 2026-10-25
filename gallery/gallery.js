@@ -174,6 +174,17 @@
         return m ? m[1] : null;
     };
     const isFacebook = (v) => /facebook\.com|fb\.watch/i.test(v || "");
+    // Facebook embeds are most reliable with a clean link: removes tracking bits like ?mibextid=...&rdid=...
+    // and turns .../watch/?v=123&... into .../watch/?v=123
+    const cleanFacebookUrl = (u) => {
+        try {
+            const url = new URL(u);
+            if (!/(^|\.)facebook\.com$/i.test(url.hostname)) return u;      // fb.watch etc. are left alone
+            const v = url.searchParams.get("v");
+            if (v && /^\d+$/.test(v)) return `https://www.facebook.com/watch/?v=${v}`;
+            return `https://www.facebook.com${url.pathname}`;                // reels, /videos/123/ ... minus the query
+        } catch (e) { return u; }
+    };
     const isPlaceholder = (v) => !v || /PASTE|LINK_HERE|VIDEO_ID/i.test(v);
 
     const vmodal = $("#vmodal");
@@ -201,20 +212,21 @@
             note("Video coming soon", "Paste the Facebook or YouTube link into this card in gallery/index.html.");
         } else {
             const fb = isFacebook(raw);
+            const fbUrl = fb ? cleanFacebookUrl(raw) : "";
             const id = fb ? null : ytId(raw);
             if (!fb && !id) {
                 note("Link not recognised", "Use a full Facebook or YouTube video link.");
             } else {
                 const iframe = document.createElement("iframe");
                 iframe.src = fb
-                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(raw)}&show_text=false&autoplay=true`
+                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(fbUrl)}&show_text=false&autoplay=true`
                     : `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
                 iframe.title = title || "Video";
                 iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen";
                 iframe.allowFullscreen = true;
                 vframe.appendChild(iframe);
-                vOpen.href = fb ? raw : `https://www.youtube.com/watch?v=${id}`;
-                vOpen.textContent = fb ? "Open on Facebook ↗" : "Open on YouTube ↗";
+                vOpen.href = fb ? fbUrl : `https://www.youtube.com/watch?v=${id}`;
+                vOpen.textContent = fb ? "Not playing? Open on Facebook ↗" : "Open on YouTube ↗";
                 vOpen.hidden = false;
             }
         }
